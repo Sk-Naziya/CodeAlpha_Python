@@ -1,5 +1,7 @@
 import streamlit as st
 from auth import register, login
+from themes import THEMES
+from styles import apply_theme
 from chatbot import (
     create_chat,
     get_chats,
@@ -107,71 +109,17 @@ else:
 
     # THEME SELECTOR
 
-    theme = st.sidebar.selectbox(
-        "🎨 Choose Theme",
-        [
-            "🤖 Robot",
-            "👑 Princess",
-            "🌊 Ocean"
-        ]
-    )
-    # -------------------------
-# THEMES
-# -------------------------
+    theme_name = st.sidebar.selectbox(
+    "🎨 Theme",
+    list(THEMES.keys())
+)
 
-if theme == "🤖 Robot":
+    theme = THEMES[theme_name]
 
-    st.markdown("""
-    <style>
-    .stApp {
-        background: linear-gradient(135deg,#0f172a,#1e293b,#334155);
-        color:white;
-    }
-
-    .stButton>button {
-        background:#2563eb;
-        color:white;
-        border-radius:12px;
-    }
-
-    .stChatInput input {
-        border-radius:15px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-elif theme == "👑 Princess":
-
-    st.markdown("""
-    <style>
-    .stApp {
-        background: linear-gradient(135deg,#ffc0cb,#ffe4e1,#fff0f5);
-    }
-
-    .stButton>button {
-        background:#ff69b4;
-        color:white;
-        border-radius:12px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-elif theme == "🌊 Ocean":
-
-    st.markdown("""
-    <style>
-    .stApp {
-        background: linear-gradient(135deg,#0284c7,#38bdf8,#7dd3fc);
-    }
-
-    .stButton>button {
-        background:#0369a1;
-        color:white;
-        border-radius:12px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
+    st.markdown(
+    apply_theme(theme),
+    unsafe_allow_html=True
+)
     # SEARCH CHATS
 
     search = st.sidebar.text_input(
